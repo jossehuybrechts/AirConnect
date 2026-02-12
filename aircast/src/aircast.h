@@ -51,6 +51,7 @@ typedef struct sMRConfig
 	char		Latency[STR_LEN];
 	bool		Drift;
 	char		ArtWork[4*STR_LEN];
+	char		PairingCode[16];
 } tMRConfig;
 
 struct sMR {

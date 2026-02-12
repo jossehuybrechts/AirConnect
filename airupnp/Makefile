@@ -36,7 +36,7 @@ PUPNP 		= $(COMMON)/libpupnp/targets/$(HOST)/$(PLATFORM)
 CODECS		= $(COMMON)/libcodecs/targets
 OPENSSL		= $(COMMON)/libopenssl/targets/$(HOST)/$(PLATFORM)
 
-DEFINES 	+= -DNDEBUG -D_GNU_SOURCE -DUPNP_STATIC_LIB
+DEFINES 	+= -DNDEBUG -D_GNU_SOURCE -DUPNP_STATIC_LIB -DSSL_STATIC_LIB
 CFLAGS  	+= -Wall -fPIC -ggdb -O2 $(DEFINES) -fdata-sections -ffunction-sections
 LDFLAGS 	+= -lpthread -ldl -lm -L.
 
@@ -64,7 +64,8 @@ OBJECTS_STATIC 	= $(patsubst %.c,$(BUILDDIR)/%.o,$(SOURCES)) $(patsubst %.c,$(BU
 LIBRARY	= $(RAOP)/$(HOST)/$(PLATFORM)/libraop.a \
 			$(PUPNP)/libpupnp.a \
 			$(CODECS)/$(HOST)/$(PLATFORM)/libcodecs.a \
-			$(MDNS)/$(HOST)/$(PLATFORM)/libmdns.a
+			$(MDNS)/$(HOST)/$(PLATFORM)/libmdns.a \
+			$(OPENSSL)/libopenssl.a
 
 LIBRARY_STATIC = $(LIBRARY) $(OPENSSL)/libopenssl.a
 

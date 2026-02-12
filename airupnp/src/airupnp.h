@@ -63,6 +63,7 @@ typedef struct sMRConfig
 	bool		Drift;
 	uint8_t		mac[6];
 	char		ArtWork[4*STR_LEN];
+	char		PairingCode[16];
 } tMRConfig;
 
 struct sMR {

@@ -26,6 +26,38 @@ extern log_level	raop_loglevel;
 extern log_level	upnp_loglevel;
 
 /*----------------------------------------------------------------------------*/
+static void SaveJSONConfig(struct sMR* devices, int max_devices) {
+	char* home = getenv("HOME");
+	char path[512];
+	if (home) {
+		snprintf(path, sizeof(path), "%s/airconnect_config.json", home);
+	}
+	else {
+		strcpy(path, "airconnect_config.json");
+	}
+
+	FILE* f = fopen(path, "w");
+	if (!f) return;
+
+	fprintf(f, "{\n  \"devices\": [\n");
+	bool first = true;
+	for (int i = 0; i < max_devices; i++) {
+		if (!devices[i].Running) continue;
+		if (!first) fprintf(f, ",\n");
+		first = false;
+		fprintf(f, "    {\n");
+		fprintf(f, "      \"name\": \"%s\",\n", devices[i].Config.Name);
+		fprintf(f, "      \"mac\": \"%02x:%02x:%02x:%02x:%02x:%02x\",\n",
+			devices[i].Config.mac[0], devices[i].Config.mac[1], devices[i].Config.mac[2],
+			devices[i].Config.mac[3], devices[i].Config.mac[4], devices[i].Config.mac[5]);
+		fprintf(f, "      \"pairing_code\": \"%s\"\n", devices[i].Config.PairingCode);
+		fprintf(f, "    }");
+	}
+	fprintf(f, "\n  ]\n}\n");
+	fclose(f);
+}
+
+/*----------------------------------------------------------------------------*/
 void SaveConfig(char *name, void *ref, bool full) {
 	struct sMR *p;
 	IXML_Document *doc = ixmlDocument_createDocument();
@@ -112,6 +144,8 @@ void SaveConfig(char *name, void *ref, bool full) {
 	free(s);
 
 	ixmlDocument_free(doc);
+
+	SaveJSONConfig(glMRDevices, glMaxDevices);
 }
 
 /*----------------------------------------------------------------------------*/
@@ -130,6 +164,7 @@ static void LoadConfigItem(tMRConfig *Conf, char *name, char *val) {
 	if (!strcmp(name, "latency")) strcpy(Conf->Latency, val);
 	if (!strcmp(name, "drift")) Conf->Drift = atoi(val);
 	if (!strcmp(name, "name")) strcpy(Conf->Name, val);
+	if (!strcmp(name, "pairing_code")) strcpy(Conf->PairingCode, val);
 	if (!strcmp(name, "mac"))  {
 		unsigned mac[6];
 		int i;
