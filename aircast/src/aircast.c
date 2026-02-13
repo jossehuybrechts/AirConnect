@@ -60,6 +60,7 @@ tMRConfig			glMRConfig = {
 							"",		// rtp/http_latency (0 = use client's request)
 							false,	// drift
 							"", 	// artwork
+							"392-27-015", // pairing code
 					};
 
 

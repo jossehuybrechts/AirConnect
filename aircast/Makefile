@@ -38,7 +38,7 @@ OPENSSL		= $(COMMON)/libopenssl/targets/$(HOST)/$(PLATFORM)
 NANOPB		= nanopb
 JANSSON		= libjansson/targets/$(HOST)/$(PLATFORM)
 
-DEFINES 	+= -D_FILE_OFFSET_BITS=64 -DPB_FIELD_16BIT -DNDEBUG -D_GNU_SOURCE -DUPNP_STATIC_LIB
+DEFINES 	+= -D_FILE_OFFSET_BITS=64 -DPB_FIELD_16BIT -DNDEBUG -D_GNU_SOURCE -DUPNP_STATIC_LIB -DSSL_STATIC_LIB
 CFLAGS  	+= -Wall -fPIC -ggdb -O2 $(DEFINES) -fdata-sections -ffunction-sections -std=gnu11
 LDFLAGS 	+= -lpthread -ldl -lm -L. 
 
@@ -70,7 +70,8 @@ LIBRARY		= $(RAOP)/$(HOST)/$(PLATFORM)/libraop.a \
 			  $(PUPNP)/libpupnp.a \
 			  $(CODECS)/$(HOST)/$(PLATFORM)/libcodecs.a \
 			  $(MDNS)/$(HOST)/$(PLATFORM)/libmdns.a \
-			  $(JANSSON)/libjansson.a
+			  $(JANSSON)/libjansson.a \
+			  $(OPENSSL)/libopenssl.a
 				  
 LIBRARY_STATIC 	= $(LIBRARY) $(OPENSSL)/libopenssl.a
 
