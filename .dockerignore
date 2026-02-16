@@ -1,0 +1,9 @@
+.git
+.gitmodules
+bin
+**/*.o
+AirConnect-*.zip
+*.log
+*.xml
+!config.xml
+# Do not ignore .a files as they are pre-built libraries required for the build

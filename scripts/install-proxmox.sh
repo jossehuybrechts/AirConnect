@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # AirConnect Docker Compose Installation Script (optimized for Proxmox LXC)
-# This script installs Docker, Docker Compose, and sets up AirConnect.
+# This script installs Docker, Docker Compose, and sets up AirConnect from source.
 
 set -e
 
@@ -63,34 +63,25 @@ else
     echo -e "${GREEN}Docker Compose is already installed.${NC}"
 fi
 
-# Create directory for AirConnect and docker-compose.yml
-if [ ! -f docker-compose.yml ]; then
-    echo -e "${YELLOW}Creating airconnect directory and docker-compose.yml...${NC}"
-    mkdir -p airconnect
-    cd airconnect
-
-    cat <<EOF > docker-compose.yml
-services:
-  airconnect:
-    image: 1activegeek/airconnect:latest
-    container_name: airconnect
-    network_mode: host
-    restart: unless-stopped
-    # Environment variables to configure the bridges
-    environment:
-      - AIRUPNP_VAR=-l 1000:2000
-      # To disable one of the services, set its variable to 'kill'
-      # - AIRUPNP_VAR=kill
-      # - AIRCAST_VAR=kill
-EOF
+# Handle repository setup
+if [ ! -f Dockerfile ]; then
+    echo -e "${YELLOW}No Dockerfile found. Cloning repository...${NC}"
+    if command -v git &> /dev/null; then
+        # Use the canonical repository
+        git clone --depth 1 https://github.com/philippe44/AirConnect.git airconnect
+        cd airconnect
+    else
+        echo -e "${RED}Git not found. Please install git or run this script from within the repository.${NC}"
+        exit 1
+    fi
 fi
 
 # Start AirConnect
-echo -e "${YELLOW}Starting AirConnect with Docker Compose...${NC}"
+echo -e "${YELLOW}Building and starting AirConnect with Docker Compose...${NC}"
 if docker compose version &> /dev/null; then
-    docker compose up -d
+    docker compose up -d --build
 else
-    docker-compose up -d
+    docker-compose up -d --build
 fi
 
 echo "------------------------------------------"

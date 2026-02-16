@@ -42,18 +42,19 @@ ter)
 For an easy installation using Docker Compose (highly recommended for Proxmox LXC), you can use the following one-liner:
 
 ```bash
-bash -c "$(curl -sSL https://raw.githubusercontent.com/jossehuybrechts/AirConnect/master/scripts/install-proxmox.sh)"
+bash -c "$(curl -sSL https://raw.githubusercontent.com/philippe44/AirConnect/master/scripts/install-proxmox.sh)"
 ```
 
 This script will:
 - Install Docker and Docker Compose if they are not already installed.
 - Check for Proxmox LXC specific requirements (like 'nesting=1').
-- Download the `docker-compose.yml` and start AirConnect.
+- Clone the repository and build the Docker image from local source.
+- Start AirConnect using Docker Compose.
 
-Alternatively, you can manually use the `docker-compose.yml` provided in this repository:
+Alternatively, you can manually build and run using Docker Compose:
 
 ```bash
-docker compose up -d
+docker compose up -d --build
 ```
 
 ## Running
