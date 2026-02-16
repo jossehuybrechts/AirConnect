@@ -1,0 +1,17 @@
+services:
+  airconnect:
+    image: 1activegeek/airconnect:latest
+    container_name: airconnect
+    network_mode: host
+    restart: unless-stopped
+    # Environment variables to configure the bridges
+    # Refer to the documentation for more details: https://github.com/1activegeek/docker-airconnect
+    environment:
+      - AIRUPNP_VAR=-l 1000:2000
+      # - AIRCAST_VAR=-x /config/aircast.xml
+      # To disable one of the services, set its variable to 'kill'
+      # - AIRUPNP_VAR=kill
+      # - AIRCAST_VAR=kill
+    # Optional: mount a config directory
+    # volumes:
+    #   - ./config:/config
