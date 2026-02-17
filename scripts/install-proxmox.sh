@@ -77,12 +77,18 @@ if [ ! -f Dockerfile ]; then
     echo -e "${YELLOW}No Dockerfile found. Cloning repository...${NC}"
     if command -v git &> /dev/null; then
         # Use the current repository
-        git clone --depth 1 https://github.com/jossehuybrechts/AirConnect.git airconnect
+        git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/jossehuybrechts/AirConnect.git airconnect
         cd airconnect
     else
         echo -e "${RED}Git not found. Please install git or run this script from within the repository.${NC}"
         exit 1
     fi
+fi
+
+# Ensure submodules are initialized (important for building from source)
+if [ -d .git ]; then
+    echo -e "${YELLOW}Initializing submodules...${NC}"
+    git submodule update --init --recursive
 fi
 
 # Start AirConnect
