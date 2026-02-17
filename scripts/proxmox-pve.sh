@@ -71,7 +71,7 @@ sleep 5
 
 # Install AirConnect inside LXC
 echo -e "${YELLOW}Running AirConnect installer inside container...${NC}"
-pct exec $VMID -- bash -c "$(curl -sSL https://raw.githubusercontent.com/philippe44/AirConnect/master/scripts/install-proxmox.sh)"
+pct exec $VMID -- bash -c "$(curl -sSL https://raw.githubusercontent.com/jossehuybrechts/AirConnect/master/scripts/install-proxmox.sh)"
 
 echo "------------------------------------------"
 echo -e "${GREEN}Installation Complete!${NC}"

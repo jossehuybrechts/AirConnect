@@ -67,8 +67,8 @@ fi
 if [ ! -f Dockerfile ]; then
     echo -e "${YELLOW}No Dockerfile found. Cloning repository...${NC}"
     if command -v git &> /dev/null; then
-        # Use the canonical repository
-        git clone --depth 1 https://github.com/philippe44/AirConnect.git airconnect
+        # Use the current repository
+        git clone --depth 1 https://github.com/jossehuybrechts/AirConnect.git airconnect
         cd airconnect
     else
         echo -e "${RED}Git not found. Please install git or run this script from within the repository.${NC}"
