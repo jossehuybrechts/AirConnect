@@ -67,7 +67,28 @@ pct set $VMID -features nesting=1,keyctl=1
 # Start container
 echo -e "${YELLOW}Starting container...${NC}"
 pct start $VMID || true
-sleep 5
+sleep 10
+
+# Wait for network and DNS readiness
+echo -e "${YELLOW}Waiting for network and DNS readiness in container...${NC}"
+MAX_WAIT=30
+WAIT_COUNT=0
+DNS_READY=false
+
+until [ $WAIT_COUNT -ge $MAX_WAIT ]; do
+    if pct exec $VMID -- getent hosts deb.debian.org &>/dev/null; then
+        DNS_READY=true
+        break
+    fi
+    echo -e "${YELLOW}Waiting for DNS resolution ($WAIT_COUNT/$MAX_WAIT)...${NC}"
+    sleep 2
+    WAIT_COUNT=$((WAIT_COUNT+2))
+done
+
+if [ "$DNS_READY" = false ]; then
+    echo -e "${RED}DNS resolution is not working in the container after $MAX_WAIT seconds.${NC}"
+    echo -e "${YELLOW}This might cause the installation to fail.${NC}"
+fi
 
 # Install AirConnect inside LXC
 echo -e "${YELLOW}Running AirConnect installer inside container...${NC}"

@@ -11,6 +11,29 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+# Helper for robust apt-get update
+apt_update() {
+    local max_retries=3
+    local count=0
+    local success=false
+
+    until [ $count -ge $max_retries ]; do
+        echo -e "${YELLOW}Updating package lists (attempt $((count+1))/$max_retries)...${NC}"
+        if apt-get update; then
+            success=true
+            break
+        fi
+        count=$((count+1))
+        echo -e "${YELLOW}Update failed. Waiting 5 seconds...${NC}"
+        sleep 5
+    done
+
+    if [ "$success" = false ]; then
+        echo -e "${YELLOW}Standard update failed. Trying with ForceIPv4 fallback...${NC}"
+        apt-get update -o Acquire::ForceIPv4=true
+    fi
+}
+
 echo -e "${GREEN}AirConnect Docker Compose Installer${NC}"
 echo "------------------------------------------"
 
@@ -40,8 +63,8 @@ fi
 if [ "$OS" = "debian" ] || [ "$OS" = "ubuntu" ]; then
     if ! command -v curl &> /dev/null || ! command -v git &> /dev/null; then
         echo -e "${YELLOW}Installing missing dependencies (curl, git, ca-certificates)...${NC}"
-        apt-get update
-        apt-get install -y curl git ca-certificates
+        apt_update
+        apt-get install -y curl git ca-certificates || { echo -e "${RED}Failed to install dependencies. Check your network/DNS.${NC}"; exit 1; }
     fi
 fi
 
@@ -60,8 +83,8 @@ fi
 if ! command -v docker-compose &> /dev/null && ! docker compose version &> /dev/null; then
     echo -e "${YELLOW}Docker Compose not found. Installing...${NC}"
     if [ "$OS" = "debian" ] || [ "$OS" = "ubuntu" ]; then
-        apt-get update
-        apt-get install -y docker-compose-plugin || apt-get install -y docker-compose
+        apt_update
+        apt-get install -y docker-compose-plugin || apt-get install -y docker-compose || { echo -e "${RED}Failed to install Docker Compose.${NC}"; exit 1; }
     else
         # Fallback for other distros
         curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
