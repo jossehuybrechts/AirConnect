@@ -7,7 +7,7 @@ The audio, after being decoded from alac, can be sent in plain, or re-encoded us
 
 ## Installing
 
-1. Pre-built binaries are in `AirConnect-<X.Y.Z>.zip`. It can be downloaded manually in a terminal by typing `wget https://raw.githubusercontent.com/philippe44/AirConnect/master/AirConnect-<X.Y.Z>.zip`. Unzip the file an select the binary that works for your system.
+1. Pre-built binaries are in `AirConnect-<X.Y.Z>.zip`. It can be downloaded manually in a terminal by typing `wget https://raw.githubusercontent.com/jossehuybrechts/AirConnect/master/AirConnect-<X.Y.Z>.zip`. Unzip the file an select the binary that works for your system.
 
 	* For **Chromecast**, the file is `aircast-<os>-<cpu>` (so `aircast-macos-x86_64` for Chromecast on MacOS + Intel CPU) 
 	* For **UPnP/Sonos**, the file is `airupnp-<os>-<cpu>` (so `airupnp-macos-arm64` for UPnP/Sonos on MacOS + arm CPU) 
@@ -32,7 +32,7 @@ The audio, after being decoded from alac, can be sent in plain, or re-encoded us
 	- Each device uses 1 port permanently (RTSP) and when playing adds 1 port for HTTP and 3 ports for RTP (use `-g`or \<ports\> parameter, default is random)
 	- UPnP adds one extra port for discovery (use `-b` or \<upnp_socket\> parameter, default is 49152 and user value must be *above* this)
 
-6. [@faserF](https://github.com/FaserF) has made a [script](https://github.com/philippe44/AirConnect/blob/master/updater) for install/update 
+6. [@faserF](https://github.com/FaserF) has made a [script](https://github.com/jossehuybrechts/AirConnect/blob/master/updater) for install/update
 ter)
 
 7. In Docker, you must use 'host' mode to enable audio webserver. Note that you can't have a NAT between your devices and the machine where AirConnect runs.
@@ -44,14 +44,14 @@ For an easy installation on Proxmox VE or any Linux system using Docker Compose,
 #### 1. Proxmox VE Host Script (Automated LXC Creation)
 If you want to create a new dedicated LXC container for AirConnect directly from your Proxmox Host shell, run:
 ```bash
-bash -c "$(curl -sSL https://raw.githubusercontent.com/philippe44/AirConnect/master/scripts/proxmox-pve.sh)"
+bash -c "$(curl -sSL https://raw.githubusercontent.com/jossehuybrechts/AirConnect/master/scripts/proxmox-pve.sh)"
 ```
 This script will create the LXC, configure necessary features (nesting, keyctl), and install AirConnect.
 
 #### 2. Inside LXC / Linux Script (Existing System)
 If you already have an LXC container or a Linux system and want to install AirConnect using Docker Compose, run this **inside** the system:
 ```bash
-bash -c "$(curl -sSL https://raw.githubusercontent.com/philippe44/AirConnect/master/scripts/install-proxmox.sh)"
+bash -c "$(curl -sSL https://raw.githubusercontent.com/jossehuybrechts/AirConnect/master/scripts/install-proxmox.sh)"
 ```
 
 This script will:
@@ -282,7 +282,7 @@ Please see [here](https://github.com/philippe44/cross-compiling/blob/master/READ
 Otherwise, you can just get the source code and pre-built binaries:
 ```
 cd ~
-git clone http://github.com/philippe44/airconnect
+git clone http://github.com/jossehuybrechts/AirConnect
 cd ~/airconnect
 git submodule update --init
 

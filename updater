@@ -1,5 +1,5 @@
 #!/bin/bash
-#AirConnect Updater - Pull latest Update from https://github.com/philippe44/AirConnect
+#AirConnect Updater - Pull latest Update from https://github.com/jossehuybrechts/AirConnect
 #AirConnect by philippe44 - updater script by FaserF https://github.com/FaserF
 
 #Variables
@@ -64,7 +64,7 @@ function cleanInstall() {
 	echo "----"
 	echo "Installing newest version..."
 	echo "----"
-	git clone --depth=1 https://github.com/philippe44/AirConnect.git $targetdirectory 2>&1 >/dev/null 
+	git clone --depth=1 https://github.com/jossehuybrechts/AirConnect.git $targetdirectory 2>&1 >/dev/null
 }
 
 
@@ -89,7 +89,7 @@ function searchNewVersion() {
 	echo "----"
 	
 	#Download online changelog
-	download https://raw.githubusercontent.com/philippe44/AirConnect/master/CHANGELOG $tmpfolder/CHANGELOG
+	download https://raw.githubusercontent.com/jossehuybrechts/AirConnect/master/CHANGELOG $tmpfolder/CHANGELOG
 
 	#Calculate online version
 	newversion=$(head -n 1 $tmpfolder/CHANGELOG)
@@ -127,7 +127,7 @@ function updateCurrentVersion() {
 	echo "----"
 	echo "Update version..."
 	echo "----"
-	git clone --depth=1 https://github.com/philippe44/AirConnect.git $downloadfolder 2>&1 >/dev/null
+	git clone --depth=1 https://github.com/jossehuybrechts/AirConnect.git $downloadfolder 2>&1 >/dev/null
 
 	#Install
 	mv $downloadfolder/* $currentdirectory
