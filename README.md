@@ -37,6 +37,35 @@ ter)
 
 7. In Docker, you must use 'host' mode to enable audio webserver. Note that you can't have a NAT between your devices and the machine where AirConnect runs.
 
+### Docker Compose & Proxmox VE
+
+For an easy installation on Proxmox VE or any Linux system using Docker Compose, you have two options:
+
+#### 1. Proxmox VE Host Script (Automated LXC Creation)
+If you want to create a new dedicated LXC container for AirConnect directly from your Proxmox Host shell, run:
+```bash
+bash -c "$(curl -sSL https://raw.githubusercontent.com/philippe44/AirConnect/master/scripts/proxmox-pve.sh)"
+```
+This script will create the LXC, configure necessary features (nesting, keyctl), and install AirConnect.
+
+#### 2. Inside LXC / Linux Script (Existing System)
+If you already have an LXC container or a Linux system and want to install AirConnect using Docker Compose, run this **inside** the system:
+```bash
+bash -c "$(curl -sSL https://raw.githubusercontent.com/philippe44/AirConnect/master/scripts/install-proxmox.sh)"
+```
+
+This script will:
+- Install Docker and Docker Compose if they are not already installed.
+- Check for Proxmox LXC specific requirements (like 'nesting=1').
+- Clone the repository and build the Docker image from local source.
+- Start AirConnect using Docker Compose.
+
+Alternatively, you can manually build and run using Docker Compose:
+
+```bash
+docker compose up -d --build
+```
+
 ## Running
 
 Double click the \<executable\> or launch it by typing `./<executable>` in the same command line window. 
