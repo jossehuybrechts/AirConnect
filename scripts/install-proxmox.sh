@@ -36,6 +36,15 @@ else
     OS="unknown"
 fi
 
+# Install basic dependencies
+if [ "$OS" = "debian" ] || [ "$OS" = "ubuntu" ]; then
+    if ! command -v curl &> /dev/null || ! command -v git &> /dev/null; then
+        echo -e "${YELLOW}Installing missing dependencies (curl, git, ca-certificates)...${NC}"
+        apt-get update
+        apt-get install -y curl git ca-certificates
+    fi
+fi
+
 # Install Docker
 if ! command -v docker &> /dev/null; then
     echo -e "${YELLOW}Docker not found. Installing...${NC}"
