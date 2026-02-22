@@ -56,7 +56,7 @@ else
     STORAGE=$(pvesm status -content rootdir | grep "active" | awk '{print $1}' | head -n 1)
     STORAGE=${STORAGE:-local-lvm}
 
-    pct create $VMID "$TEMPLATE" --hostname "$HOSTNAME" --net0 name=eth0,bridge=vmbr0,ip=dhcp --rootfs "volume=$STORAGE,size=10G" --password airconnect --unprivileged 1
+    pct create $VMID "$TEMPLATE" --hostname "$HOSTNAME" --net0 name=eth0,bridge=vmbr0,ip=dhcp --rootfs "$STORAGE:10" --password airconnect --unprivileged 1
     echo -e "${GREEN}Container created successfully on storage: $STORAGE (10G)${NC}"
 fi
 
