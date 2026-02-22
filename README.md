@@ -287,6 +287,8 @@ cd ~/airconnect
 git submodule update --init
 
 ```
+**Note: Do not use the `--recursive` flag.** The project is structured to use pre-built libraries located in the `targets` directory of each submodule. Recursive initialization will fetch unnecessary source code and duplicates, significantly increasing disk space usage and potentially leading to errors on some systems.
+
 NB: you can speed up all clonings by a lot by adding `--depth 1` option to just to a shallow clone (you probably don't need all the commits)
 
 and build doing:
