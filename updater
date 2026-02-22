@@ -64,7 +64,8 @@ function cleanInstall() {
 	echo "----"
 	echo "Installing newest version..."
 	echo "----"
-	git clone --depth=1 --recurse-submodules --shallow-submodules https://github.com/jossehuybrechts/AirConnect.git $targetdirectory 2>&1 >/dev/null
+	git clone --depth=1 https://github.com/jossehuybrechts/AirConnect.git $targetdirectory 2>&1 >/dev/null
+	git -C $targetdirectory submodule update --init --depth 1
 }
 
 
@@ -127,7 +128,8 @@ function updateCurrentVersion() {
 	echo "----"
 	echo "Update version..."
 	echo "----"
-	git clone --depth=1 --recurse-submodules --shallow-submodules https://github.com/jossehuybrechts/AirConnect.git $downloadfolder 2>&1 >/dev/null
+	git clone --depth=1 https://github.com/jossehuybrechts/AirConnect.git $downloadfolder 2>&1 >/dev/null
+	git -C $downloadfolder submodule update --init --depth 1
 
 	#Install
 	mv $downloadfolder/* $currentdirectory
