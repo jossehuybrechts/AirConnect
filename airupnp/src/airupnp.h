@@ -7,6 +7,14 @@
  *
  */
 
+/**
+ * @file airupnp.h
+ * @brief Core structures and macros for the AirUPnP bridge.
+ *
+ * Defines the main configuration blocks and operational state representations
+ * used to interface UPnP devices with the AirPlay server backend.
+ */
+
 #pragma once
 
 #include <signal.h>

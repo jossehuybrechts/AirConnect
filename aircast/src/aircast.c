@@ -7,6 +7,14 @@
  *
  */
 
+/**
+ * @file aircast.c
+ * @brief Main entry point for the AirCast bridge.
+ *
+ * This file contains the initialization, configuration parsing, and main execution loop
+ * for bridging Chromecast devices to AirPlay protocol.
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
@@ -177,6 +185,7 @@ static void raop_cb(void *owner, raopsr_event_t event, ...) {
 	if (!Device->Running) {
 		LOG_WARN("[%p]: device has been removed", owner);
 		pthread_mutex_unlock(&Device->Mutex);
+		va_end(args);
 		return;
 	}
 

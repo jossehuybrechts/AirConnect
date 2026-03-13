@@ -7,6 +7,14 @@
  *
  */
 
+/**
+ * @file aircast.h
+ * @brief Core structures and macros for the AirCast bridge.
+ *
+ * Defines the main configuration blocks and operational state representations
+ * used to interface Chromecast devices with the AirPlay server backend.
+ */
+
 #pragma once
 
 #include <signal.h>
