@@ -278,7 +278,10 @@ void HandleRAOP(void *owner, raopsr_event_t event, ...) {
 	va_start(args, event);
 
 	// this is async, so need to check context validity
-	if (!CheckAndLock(owner)) return;
+	if (!CheckAndLock(owner)) {
+		va_end(args);
+		return;
+	}
 
 	switch (event) {
 		case RAOP_STREAM:
